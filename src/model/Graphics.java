@@ -20,8 +20,8 @@ public class Graphics extends JPanel implements ActionListener {
 
         this.game = g;
 
-        snake = game.getSnake();
-        food = game.getFood();
+        this.snake = game.getSnake();
+        this.food = game.getFood();
 
         this.addKeyListener(game);
         this.setFocusable(true);
@@ -35,7 +35,7 @@ public class Graphics extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) game;
 
         g2d.setColor(Color.black);
-        g2d.fillRect(0,0,Game.width * Game.dimension, Game.height * Game.dimension);
+        g2d.fillRect(0,0,Game.width * Game.dimension + 5, Game.height * Game.dimension + 5);
 
         if (state == "START") {
             g2d.setColor(Color.white);
@@ -44,13 +44,21 @@ public class Graphics extends JPanel implements ActionListener {
         } else if (state == "RUNNING") {
             // color for food
             g2d.setColor(Color.red);
-            g2d.fillRect(food.getxPos() * Game.dimension, food.getyPos() * Game.dimension,
+            g2d.fillRect(food.getPosX() * Game.dimension, food.getPosY() * Game.dimension,
                     Game.dimension, Game.dimension);
+
+            // score board
+            g2d.setColor(Color.white);
+            g2d.drawString("Score: " + this.game.getScore(), Game.width * Game.dimension - Game.dimension * 3,
+                    Game.dimension);
+
             // color for snake
             g2d.setColor(Color.green);
-            for (int i = 0; i < snake.getBody().size(); i++) {
-                g2d.fillRect(snake.getBody().get(i).x * Game.dimension, snake.getBody().get(i).y * Game.dimension,
-                        Game.dimension, Game.dimension);
+//            for (int i = 0; i < snake.getBody().size(); i++) {
+//                g2d.fillRect(snake.getBody().get(i).x * Game.dimension, snake.getBody().get(i).y * Game.dimension,
+//                        Game.dimension, Game.dimension);
+            for (Rectangle r : snake.getBody()) {
+                g2d.fill(r);
             }
         } else {
             g2d.setColor(Color.white);

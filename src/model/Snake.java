@@ -2,7 +2,6 @@ package model;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class Snake {
 
@@ -12,7 +11,7 @@ public class Snake {
     private int d = Game.dimension;
 
     // snake properties
-    private List<Rectangle> body;
+    private ArrayList<Rectangle> body;
     private String direction; // NONE, LEFT, RIGHT, UP, and DOWN
 
     public Snake() {
@@ -35,6 +34,26 @@ public class Snake {
     // move in presence of eating food; add one rectangle to head
     public void moveWithFood() {
 
+        Rectangle head = body.get(0);
+        Rectangle newHead = new Rectangle(d, d);
+
+        if (direction.equals("LEFT")) {
+            newHead.setLocation(head.x - d, head.y);
+        } else if (direction.equals("RIGHT")) {
+            newHead.setLocation(head.x + d, head.y);
+        } else if (direction.equals("UP")) {
+            newHead.setLocation(head.x, head.y - d);
+        } else if (direction.equals("DOWN")) {
+            newHead.setLocation(head.x, head.y + d);
+        }
+
+        body.add(0, newHead);
+
+    }
+
+    // move in absence of eating food; remove tail, add one rectangle to head
+    public void moveNoFood() {
+
         if (direction != "NONE") {
 
             Rectangle head = body.get(0);
@@ -51,15 +70,8 @@ public class Snake {
             }
 
             body.add(0, newHead);
+            body.remove(body.size() - 1);
         }
-
-    }
-
-    // move in absence of eating food; remove tail, add one rectangle to head
-    public void moveNoFood() {
-
-        moveWithFood();
-        body.remove(body.size() - 1);
 
     }
 
@@ -109,7 +121,7 @@ public class Snake {
     }
 
     // return body list
-    public List<Rectangle> getBody() {
+    public ArrayList<Rectangle> getBody() {
         return body;
     }
 

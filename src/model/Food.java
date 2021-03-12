@@ -5,7 +5,6 @@ public class Food {
     // game dimensions
     private int h = Game.height;
     private int w = Game.width;
-    private int d = Game.dimension;
 
     // x and y position of the food
     private int xPos;
@@ -25,8 +24,9 @@ public class Food {
 
             isSameLocation = false;
 
-            this.xPos = (int) (Math.random() * this.w);
-            this.yPos = (int) (Math.random() * this.h);
+            // adjusted for screen size
+            this.xPos = (int) (Math.random() * this.w - 1);
+            this.yPos = (int) (Math.random() * this.h - 1);
 
             for (int i = 0; i < player.getBody().size(); i++) {
                 if ((player.getBody().get(i).x == this.xPos) && (player.getBody().get(i).y == this.yPos)) {
@@ -38,11 +38,11 @@ public class Food {
 
     }
 
-    public int getxPos() {
+    public int getPosX() {
         return xPos;
     }
 
-    public int getyPos() {
+    public int getPosY() {
         return yPos;
     }
 

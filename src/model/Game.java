@@ -31,9 +31,10 @@ public class Game implements KeyListener {
         window.add(graphics);
 
         window.setTitle("Snake in the Grass");
-        window.setSize(width * dimension, height * dimension);
+        window.setSize(width * dimension + 2, height * dimension + 4);
         window.setVisible(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
     public void start() {
@@ -60,12 +61,12 @@ public class Game implements KeyListener {
 
     private boolean isHitWall() {
         return ((snake.getHeadPosX() < 0) || (snake.getHeadPosY() < 0) ||
-                (snake.getHeadPosX() >= width) || (snake.getHeadPosY() >= height));
+                (snake.getHeadPosX() >= width * dimension) || (snake.getHeadPosY() >= height * dimension));
     }
 
     private boolean isFoodEaten() {
-        return ((snake.getHeadPosX() == food.getxPos() * dimension) &&
-                (snake.getHeadPosY() == food.getyPos() * dimension));
+        return ((snake.getHeadPosX() == food.getPosX() * dimension) &&
+                (snake.getHeadPosY() == food.getPosY() * dimension));
     }
 
     public Snake getSnake() {
@@ -91,13 +92,13 @@ public class Game implements KeyListener {
         int keyCode = e.getKeyCode();
 
         if (graphics.state == "RUNNING") {
-            if (keyCode == KeyEvent.VK_LEFT) {
+            if ((keyCode == KeyEvent.VK_LEFT) && (snake.getDirection() != "RIGHT")) {
                 snake.setLeft();
-            } else if (keyCode == KeyEvent.VK_RIGHT) {
+            } else if ((keyCode == KeyEvent.VK_RIGHT) && (snake.getDirection() != "LEFT")) {
                 snake.setRight();
-            } else if (keyCode == KeyEvent.VK_UP) {
+            } else if ((keyCode == KeyEvent.VK_UP) && (snake.getDirection() != "DOWN")) {
                 snake.setUpward();
-            } else if (keyCode == KeyEvent.VK_DOWN) {
+            } else if ((keyCode == KeyEvent.VK_DOWN) && (snake.getDirection() != "UP")) {
                 snake.setDownward();
             }
         } else {
